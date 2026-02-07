@@ -1,18 +1,21 @@
-package presentation.mapper;
+package com.parking_api.presentation.mapper;
 
-import domain.Ticket;
-import presentation.dto.TicketResponse;
+import com.parking_api.domain.model.Ticket;
+import com.parking_api.presentation.dto.TicketResponse;
 
 public class TicketMapper {
 
     public static TicketResponse toResponse(Ticket ticket) {
-        TicketResponse response = new TicketResponse();
-        response.setId(ticket.getId());
-        response.setLicensePlate(ticket.getLicensePlate());
-        response.setSpotNumber(ticket.getParkingSpot().getNumber());
-        response.setEntryTime(ticket.getEntryTime());
-        response.setExitTime(ticket.getExitTime());
-        response.setPrice(ticket.getPrice());
-        return response;
+        if (ticket == null) return null;
+
+        return new TicketResponse(
+            ticket.getId(),
+            ticket.getPlate(),
+            ticket.getSpotId(),
+            ticket.getEntryTime(),
+            ticket.getExitTime(),
+            ticket.getAmount(),
+            ticket.getStatus().toString()
+        );
     }
 }

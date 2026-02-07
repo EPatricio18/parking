@@ -5,10 +5,10 @@ import com.statementlabs.parking_api.domain.ParkingSpot;
 import java.util.Optional;
 
 public interface ParkingSpotRepository {
-
+    List<ParkingSpot> findAll();
+    List<ParkingSpot> findAvailable();
+    Optional<ParkingSpot> findById(Long id);
     Optional<ParkingSpot> findFirstFree();
-
-    Optional<ParkingSpot> findById(int id);
-
     void save(ParkingSpot spot);
+    long count();
 }
