@@ -1,11 +1,17 @@
-package com.statementlabs.parking_api.infrastructure.persistence.repository;
+package com.parking_api.infrastructure.persistence.jpa;
 
-import com.statementlabs.parking_api.infrastructure.persistence.entity.ParkingSpotEntity;
+import com.parking_api.domain.SpotStatus;
+import com.parking_api.infrastructure.persistence.entity.ParkingSpotEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface JpaParkingSpotRepository extends JpaRepository<ParkingSpotEntity, Integer> {
+@Repository
+public interface JpaParkingSpotRepository extends JpaRepository<ParkingSpotEntity, Long> {
 
-    Optional<ParkingSpotEntity> findFirstByStatus(String status);
+    List<ParkingSpotEntity> findByStatus(SpotStatus status);
+
+    Optional<ParkingSpotEntity> findFirstByStatus(SpotStatus status);
 }
