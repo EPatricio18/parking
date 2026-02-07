@@ -1,8 +1,8 @@
-package com.parking_api.infrastructure.persistence.mapper;
+package com.statementlabs.parking_api.infrastructure.mapper;
 
-import com.parking_api.domain.model.ParkingSpot;
-import com.parking_api.domain.model.SpotStatus;
-import com.parking_api.infrastructure.persistence.entity.ParkingSpotEntity;
+import com.statementlabs.parking_api.domain.ParkingSpot;
+import com.statementlabs.parking_api.domain.SpotStatus;
+import com.statementlabs.parking_api.infrastructure.persistence.entity.ParkingSpotEntity;
 
 public class ParkingSpotMapper {
 

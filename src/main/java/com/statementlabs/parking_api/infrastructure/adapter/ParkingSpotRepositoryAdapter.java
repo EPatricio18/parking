@@ -1,10 +1,10 @@
-package com.parking_api.infrastructure.persistence.adapter;
+package com.statementlabs.parking_api.infrastructure.adapter;
 
-import com.parking_api.application.port.ParkingSpotRepository;
-import com.parking_api.domain.model.ParkingSpot;
-import com.parking_api.domain.model.SpotStatus;
-import com.parking_api.infrastructure.persistence.jpa.JpaParkingSpotRepository;
-import com.parking_api.infrastructure.persistence.mapper.PersistenceParkingSpotMapper;
+import com.statementlabs.parking_api.application.port.ParkingSpotRepository;
+import com.statementlabs.parking_api.domain.ParkingSpot;
+import com.statementlabs.parking_api.domain.SpotStatus;
+import com.statementlabs.parking_api.infrastructure.repository.JpaParkingSpotRepository;
+import com.statementlabs.parking_api.infrastructure.mapper.ParkingSpotMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,26 +22,26 @@ public class ParkingSpotRepositoryAdapter implements ParkingSpotRepository {
     @Override
     public List<ParkingSpot> findAll() {
         return jpaRepository.findAll().stream()
-                .map(PersistenceParkingSpotMapper::toDomain)
+                .map(ParkingSpotMapper::toDomain)
                 .toList();
     }
 
     @Override
     public List<ParkingSpot> findAvailable() {
         return jpaRepository.findByStatus(SpotStatus.FREE).stream()
-                .map(PersistenceParkingSpotMapper::toDomain)
+                .map(ParkingSpotMapper::toDomain)
                 .toList();
     }
 
     @Override
     public void save(ParkingSpot spot) {
-        jpaRepository.save(PersistenceParkingSpotMapper.toEntity(spot));
+        jpaRepository.save(ParkingSpotMapper.toEntity(spot));
     }
 
     @Override
     public Optional<ParkingSpot> findById(Long id) {
         return jpaRepository.findById(id)
-                .map(PersistenceParkingSpotMapper::toDomain);
+                .map(ParkingSpotMapper::toDomain);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class ParkingSpotRepositoryAdapter implements ParkingSpotRepository {
         return jpaRepository.findByStatus(SpotStatus.FREE)
                             .stream()
                             .findFirst()
-                            .map(PersistenceParkingSpotMapper::toDomain);
+                            .map(ParkingSpotMapper::toDomain);
     }
 
     @Override

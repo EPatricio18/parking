@@ -1,10 +1,8 @@
-package com.parking_api.infrastructure.config;
+package com.statementlabs.parking_api.infrastructure.config;
 
-import com.parking_api.application.port.ParkingSpotRepository;
-import com.parking_api.domain.ParkingSpot;
-import com.parking_api.domain.SpotStatus;
-import com.parking_api.infrastructure.persistence.entity.ParkingSpotEntity;
-import com.parking_api.infrastructure.persistence.mapper.ParkingSpotMapper;
+import com.statementlabs.parking_api.application.port.ParkingSpotRepository;
+import com.statementlabs.parking_api.domain.ParkingSpot;
+import com.statementlabs.parking_api.domain.SpotStatus;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,11 +25,7 @@ public class DatabaseSeeder {
 
             for (long i = count + 1; i <= 50; i++) {
 
-                ParkingSpot spotDomain = new ParkingSpot(i, SpotStatus.FREE);
-
-                ParkingSpotEntity entity = PersistenceParkingSpotMapper.toEntity(spotDomain);
-
-                repository.save(entity);
+                repository.save(new ParkingSpot(i, SpotStatus.FREE));
             }
 
             System.out.println(">>> Vagas prontas.");

@@ -1,4 +1,4 @@
-package presentation.exception;
+package com.statementlabs.parking_api.presentation.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

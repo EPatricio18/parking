@@ -1,10 +1,10 @@
-package com.parking_api.presentation.controller;
+package com.statementlabs.parking_api.presentation.controller;
 
-import com.parking_api.application.usecase.CheckInVehicleUseCase;
-import com.parking_api.application.usecase.CheckOutVehicleUseCase;
-import com.parking_api.presentation.dto.CheckInRequest;
-import com.parking_api.presentation.dto.CheckOutRequest;
-import com.parking_api.presentation.dto.TicketDTO;
+import com.statementlabs.parking_api.application.usecase.CheckInVehicleUseCase;
+import com.statementlabs.parking_api.application.usecase.CheckOutVehicleUseCase;
+import com.statementlabs.parking_api.presentation.dto.CheckInRequest;
+import com.statementlabs.parking_api.presentation.dto.CheckOutRequest;
+import com.statementlabs.parking_api.presentation.dto.TicketDTO;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

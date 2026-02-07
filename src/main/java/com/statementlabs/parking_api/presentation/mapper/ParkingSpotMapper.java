@@ -1,9 +1,9 @@
-package presentation.mapper;
+package com.statementlabs.parking_api.presentation.mapper;
 
-import com.parking_api.domain.model.ParkingSpot;
-import com.parking_api.presentation.dto.ParkingSpotDTO;
+import com.statementlabs.parking_api.domain.ParkingSpot;
+import com.statementlabs.parking_api.presentation.dto.ParkingSpotDTO;
 
-public class PresentationParkingSpotMapper {
+public class ParkingSpotMapper {
 
     public static ParkingSpotDTO toDTO(ParkingSpot domain) {
         if (domain == null) return null;

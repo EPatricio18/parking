@@ -1,4 +1,4 @@
-package com.parking_api.presentation.dto;
+package com.statementlabs.parking_api.presentation.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

@@ -1,7 +1,7 @@
-package com.parking_api.presentation.controller;
+package com.statementlabs.parking_api.presentation.controller;
 
-import com.parking_api.application.port.ParkingSpotRepository;
-import com.parking_api.presentation.dto.ParkingSpotDTO;
+import com.statementlabs.parking_api.application.port.ParkingSpotRepository;
+import com.statementlabs.parking_api.presentation.dto.ParkingSpotDTO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

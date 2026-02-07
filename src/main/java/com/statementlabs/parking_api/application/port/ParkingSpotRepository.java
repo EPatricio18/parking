@@ -4,6 +4,8 @@ import com.statementlabs.parking_api.domain.ParkingSpot;
 
 import java.util.Optional;
 
+import java.util.List;
+
 public interface ParkingSpotRepository {
     List<ParkingSpot> findAll();
     List<ParkingSpot> findAvailable();

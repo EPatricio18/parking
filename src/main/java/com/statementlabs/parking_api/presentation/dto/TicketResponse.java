@@ -1,4 +1,4 @@
-package presentation.dto;
+package com.statementlabs.parking_api.presentation.dto;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +10,6 @@ public class TicketResponse {
     private LocalDateTime exitTime;
     private double price;
 
-    // Getters e setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

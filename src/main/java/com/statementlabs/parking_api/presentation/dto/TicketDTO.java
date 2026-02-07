@@ -1,6 +1,6 @@
-package com.parking_api.presentation.dto;
+package com.statementlabs.parking_api.presentation.dto;
 
-import com.parking_api.domain.TicketStatus;
+import com.statementlabs.parking_api.domain.TicketStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

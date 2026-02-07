@@ -1,4 +1,4 @@
-package com.statementlabs.parking_api.infrastructure.persistence.repository;
+package com.statementlabs.parking_api.infrastructure.repository;
 
 import com.statementlabs.parking_api.infrastructure.persistence.entity.TicketEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

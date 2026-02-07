@@ -1,5 +1,5 @@
-package presentation.dto;
+package com.statementlabs.parking_api.presentation.dto;
 
-import domain.SpotStatus;
+import com.statementlabs.parking_api.domain.SpotStatus;
 
 public record ParkingSpotDTO(Long id, SpotStatus status) {}

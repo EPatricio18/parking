@@ -1,7 +1,7 @@
-package com.parking_api.presentation.mapper;
+package com.statementlabs.parking_api.presentation.mapper;
 
-import com.parking_api.domain.Ticket;
-import com.parking_api.presentation.dto.TicketDTO;
+import com.statementlabs.parking_api.domain.Ticket;
+import com.statementlabs.parking_api.presentation.dto.TicketDTO;
 
 public class TicketMapper {
 
