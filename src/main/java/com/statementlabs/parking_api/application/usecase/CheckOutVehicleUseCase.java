@@ -14,11 +14,9 @@ public class CheckOutVehicleUseCase {
     private final ParkingSpotRepository spotRepository;
     private final TariffCalculator calculator;
 
-    public CheckOutVehicleUseCase(
-            TicketRepository ticketRepository,
-            ParkingSpotRepository spotRepository,
-            TariffCalculator calculator
-    ) {
+    public CheckOutVehicleUseCase(TicketRepository ticketRepository,
+                                  ParkingSpotRepository spotRepository,
+                                  TariffCalculator calculator) {
         this.ticketRepository = ticketRepository;
         this.spotRepository = spotRepository;
         this.calculator = calculator;

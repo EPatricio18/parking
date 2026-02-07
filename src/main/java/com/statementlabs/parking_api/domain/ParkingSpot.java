@@ -2,15 +2,20 @@ package com.statementlabs.parking_api.domain;
 
 public class ParkingSpot {
 
-    private final int id;
+    private final long id;
     private SpotStatus status;
+
+    public ParkingSpot(Long id, SpotStatus status) {
+        this.id = id;
+        this.status = status;
+    }
 
     public ParkingSpot(int id) {
         this.id = id;
         this.status = SpotStatus.FREE;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

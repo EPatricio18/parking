@@ -10,10 +10,8 @@ public class CheckInVehicleUseCase {
     private final ParkingSpotRepository spotRepository;
     private final TicketRepository ticketRepository;
 
-    public CheckInVehicleUseCase(
-            ParkingSpotRepository spotRepository,
-            TicketRepository ticketRepository
-    ) {
+    public CheckInVehicleUseCase(ParkingSpotRepository spotRepository,
+                                 TicketRepository ticketRepository) {
         this.spotRepository = spotRepository;
         this.ticketRepository = ticketRepository;
     }
@@ -25,10 +23,9 @@ public class CheckInVehicleUseCase {
                 .orElseThrow(() -> new RuntimeException("No free spots available"));
 
         spot.occupy();
+        spotRepository.save(spot);
 
         Ticket ticket = new Ticket(plate, spot.getId());
-
-        spotRepository.save(spot);
         ticketRepository.save(ticket);
 
         return ticket;

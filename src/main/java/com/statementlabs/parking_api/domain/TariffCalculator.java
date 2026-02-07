@@ -1,21 +1,27 @@
 package com.statementlabs.parking_api.domain;
 
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class TariffCalculator {
 
-    public int calculate(LocalDateTime entry, LocalDateTime exit) {
+    public BigDecimal calculate(LocalDateTime entry, LocalDateTime exit) {
 
-        long minutes = Duration.between(entry, exit).toMinutes();
-        
-        double hours = Math.ceil(minutes / 60.0);
-
-        if (hours <= 6) {
-            return hours * 300.0;
-        } else {
-            return (6 * 300.0) + ((hours - 6) * 200.0);
+        if (exit.isBefore(entry)) {
+            throw new IllegalArgumentException("Exit time cannot be before entry time");
         }
 
+        long minutes = Duration.between(entry, exit).toMinutes();
+        long hours = (long) Math.ceil(minutes / 60.0);
+
+        BigDecimal total;
+        if (hours <= 6) {
+            total = BigDecimal.valueOf(hours * 300);
+        } else {
+            total = BigDecimal.valueOf((6 * 300) + ((hours - 6) * 200));
+        }
+
+        return total;
     }
 }

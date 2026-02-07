@@ -1,3 +1,7 @@
-package presentation.dto;
+package com.parking_api.presentation.dto;
 
-public record CheckOutRequest(String plateOrTicketId) {}
+import jakarta.validation.constraints.NotBlank;
+
+public record CheckOutRequest(
+    @NotBlank String plateOrTicketId
+) {}

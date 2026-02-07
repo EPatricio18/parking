@@ -45,6 +45,14 @@ public class ParkingSpotRepositoryAdapter implements ParkingSpotRepository {
     }
 
     @Override
+    public Optional<ParkingSpot> findFirstFree() {
+        return jpaRepository.findByStatus(SpotStatus.FREE)
+                            .stream()
+                            .findFirst()
+                            .map(PersistenceParkingSpotMapper::toDomain);
+    }
+
+    @Override
     public long count() {
         return jpaRepository.count();
     }

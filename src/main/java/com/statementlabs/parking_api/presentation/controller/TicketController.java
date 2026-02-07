@@ -1,10 +1,10 @@
-package presentation.controller;
+package com.parking_api.presentation.controller;
 
-import application.usecase.CheckInVehicleUseCase;
-import application.usecase.CheckOutVehicleUseCase;
-import presentation.dto.CheckInRequest;
-import presentation.dto.CheckOutRequest;
-import presentation.dto.TicketDTO;
+import com.parking_api.application.usecase.CheckInVehicleUseCase;
+import com.parking_api.application.usecase.CheckOutVehicleUseCase;
+import com.parking_api.presentation.dto.CheckInRequest;
+import com.parking_api.presentation.dto.CheckOutRequest;
+import com.parking_api.presentation.dto.TicketDTO;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,13 +24,13 @@ public class TicketController {
     public TicketDTO checkIn(@RequestBody CheckInRequest request) {
         var ticket = checkInUseCase.execute(request.plate());
         return new TicketDTO(
-                ticket.getId(),
+                ticket.getId(),            
                 ticket.getPlate(),
-                ticket.getParkingSpotId(),
-                ticket.getCheckInTime(),
-                ticket.getCheckOutTime(),
+                ticket.getSpotId(),
+                ticket.getEntryTime(),
+                ticket.getExitTime(),
                 ticket.getStatus(),
-                ticket.getAmount()
+                ticket.getAmount()         
         );
     }
 
@@ -40,9 +40,9 @@ public class TicketController {
         return new TicketDTO(
                 ticket.getId(),
                 ticket.getPlate(),
-                ticket.getParkingSpotId(),
-                ticket.getCheckInTime(),
-                ticket.getCheckOutTime(),
+                ticket.getSpotId(),
+                ticket.getEntryTime(),
+                ticket.getExitTime(),
                 ticket.getStatus(),
                 ticket.getAmount()
         );

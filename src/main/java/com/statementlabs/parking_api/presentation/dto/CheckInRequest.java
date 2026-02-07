@@ -1,3 +1,7 @@
-package presentation.dto;
+package com.parking_api.presentation.dto;
 
-public record CheckInRequest(String plate) {}
+import jakarta.validation.constraints.NotBlank;
+
+public record CheckInRequest(
+    @NotBlank String plate
+) {}

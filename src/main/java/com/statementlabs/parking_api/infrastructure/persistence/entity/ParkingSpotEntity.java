@@ -7,20 +7,20 @@ import jakarta.persistence.Id;
 public class ParkingSpotEntity {
 
     @Id
-    private Integer id;
+    private Long id;
 
     private String status;
 
     public ParkingSpotEntity() {}
 
-    public ParkingSpotEntity(Integer id, String status) {
+    public ParkingSpotEntity(Long id, String status) {
         this.id = id;
         this.status = status;
     }
 
-    public Integer getId() { return id; }
+    public Long getId() { return id; }
     public String getStatus() { return status; }
 
-    public void setId(Integer id) { this.id = id; }
+    public void setId(Long id) { this.id = id; }
     public void setStatus(String status) { this.status = status; }
 }
