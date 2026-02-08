@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface JpaParkingSpotRepository extends JpaRepository<ParkingSpotEntity, Long> {
-    Optional<ParkingSpotEntity> findFirstByStatus(String status);
+    Optional<ParkingSpotEntity> findFirstByStatusOrderByIdAsc(String status);
     List<ParkingSpotEntity> findAllByStatus(String status);
 
     @Modifying
