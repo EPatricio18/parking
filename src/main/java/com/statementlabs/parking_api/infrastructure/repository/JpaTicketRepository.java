@@ -7,6 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface JpaTicketRepository extends JpaRepository<TicketEntity, Long> {
-    Optional<TicketEntity> findByPlateAndStatus(String plate, TicketStatus status);
+    Optional<TicketEntity> findByPlateAndStatus(String plate, String status);
     List<TicketEntity> findAllByStatus(TicketStatus status);
 }

@@ -24,13 +24,13 @@ public class ParkingSpotRepositoryAdapter implements ParkingSpotRepository {
 
     @Override
     public Optional<ParkingSpot> findFirstFree() {
-        return jpaRepository.findFirstByStatus(SpotStatus.FREE)
-                .map(ParkingSpotMapper::toDomain);
+        return jpaRepository.findFirstByStatus(SpotStatus.FREE.name())
+                .map(mapper::toDomain);
     }
 
     @Override
     public Optional<ParkingSpot> findById(Long id) {
-        return jpaRepository.findById(id).map(ParkingSpotMapper::toDomain);
+        return jpaRepository.findById(id).map(mapper::toDomain);
     }
 
     @Override
@@ -43,7 +43,13 @@ public class ParkingSpotRepositoryAdapter implements ParkingSpotRepository {
     @Override
     public List<ParkingSpot> findAll() {
         return jpaRepository.findAll().stream()
-                .map(ParkingSpotMapper::toDomain)
+                .map(mapper::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    public List<ParkingSpot> findByStatus(SpotStatus status) {
+        return jpaRepository.findAllByStatus(status.name()).stream()
+                .map(mapper::toDomain)
                 .collect(Collectors.toList());
     }
 }

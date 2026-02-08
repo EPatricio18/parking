@@ -5,6 +5,7 @@ import com.statementlabs.parking_api.domain.Ticket;
 import com.statementlabs.parking_api.domain.TicketStatus;
 import com.statementlabs.parking_api.infrastructure.repository.JpaTicketRepository;
 import com.statementlabs.parking_api.infrastructure.mapper.TicketMapper;
+import com.statementlabs.parking_api.infrastructure.persistence.entity.TicketEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,14 +25,14 @@ public class TicketRepositoryAdapter implements TicketRepository {
 
     @Override
     public Ticket save(Ticket ticket) {
-        var entity = mapper.toEntity(ticket);
-        var savedEntity = jpaRepository.save(entity);
-        return mapper.toDomain(savedEntity);
+        TicketEntity entity = TicketMapper.toEntity(ticket);
+        TicketEntity savedEntity = jpaRepository.save(entity);
+        return TicketMapper.toDomain(savedEntity);
     }
 
     @Override
     public Optional<Ticket> findOpenByPlate(String plate) {
-        return jpaRepository.findByPlateAndStatus(plate, TicketStatus.OPEN)
+        return jpaRepository.findByPlateAndStatus(plate, TicketStatus.OPEN.name())
                 .map(TicketMapper::toDomain);
     }
 
