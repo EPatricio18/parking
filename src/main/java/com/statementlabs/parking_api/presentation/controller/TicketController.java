@@ -7,6 +7,7 @@ import com.statementlabs.parking_api.domain.Ticket;
 import com.statementlabs.parking_api.domain.TicketStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class TicketController {
     }
 
     @PostMapping("/check-out/{plate}")
+    @Transactional
     public ResponseEntity<Ticket> checkOut(@PathVariable String plate) {
         return ResponseEntity.ok(checkOutUseCase.execute(plate));
     }

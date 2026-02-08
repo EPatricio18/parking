@@ -4,6 +4,7 @@ import com.statementlabs.parking_api.application.port.ParkingSpotRepository;
 import com.statementlabs.parking_api.application.port.TicketRepository;
 import com.statementlabs.parking_api.domain.ParkingSpot;
 import com.statementlabs.parking_api.domain.SpotStatus;
+import com.statementlabs.parking_api.domain.TicketStatus;
 import com.statementlabs.parking_api.domain.TariffCalculator;
 import com.statementlabs.parking_api.infrastructure.service.DefaultTariffCalculator;
 import com.statementlabs.parking_api.domain.Ticket;
@@ -33,15 +34,16 @@ class CheckOutVehicleUseCaseTest {
 
     @Test
     void execute_successfulCheckOut() {
-        Ticket ticket = new Ticket("ABC-123", 1L);
         ParkingSpot spot = new ParkingSpot(1L, SpotStatus.OCCUPIED);
+        Ticket ticket = new Ticket("ABC-123", spot);
+        
 
         when(ticketRepo.findOpenByPlate("ABC-123")).thenReturn(Optional.of(ticket));
         when(spotRepo.findById(1L)).thenReturn(Optional.of(spot));
 
         Ticket result = useCase.execute("ABC-123");
 
-        assertFalse(result.isOpen());
+        assertEquals(TicketStatus.CLOSED, result.getStatus());
         //assertFalse(spot.isFree());
         assertNotNull(result.getAmount());
         verify(ticketRepo).save(result);
@@ -56,10 +58,12 @@ class CheckOutVehicleUseCaseTest {
 
     @Test
     void execute_spotNotFound_throwsException() {
-        Ticket ticket = new Ticket("ABC-123", 1L);
+        ParkingSpot spot = new ParkingSpot(1L, SpotStatus.OCCUPIED);
+        Ticket ticket = new Ticket("ABC-123", spot);
+        
         when(ticketRepo.findOpenByPlate("ABC-123")).thenReturn(Optional.of(ticket));
         when(spotRepo.findById(1L)).thenReturn(Optional.empty());
-
+    
         assertThrows(RuntimeException.class, () -> useCase.execute("ABC-123"));
     }
 }

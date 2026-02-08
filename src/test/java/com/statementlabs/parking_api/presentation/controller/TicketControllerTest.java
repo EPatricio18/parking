@@ -9,6 +9,8 @@ import com.statementlabs.parking_api.infrastructure.service.DefaultTariffCalcula
 import com.statementlabs.parking_api.presentation.dto.CheckInRequest;
 import com.statementlabs.parking_api.presentation.dto.CheckOutRequest;
 import com.statementlabs.parking_api.presentation.dto.TicketDTO;
+import com.statementlabs.parking_api.domain.ParkingSpot;
+import com.statementlabs.parking_api.domain.SpotStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +37,16 @@ class TicketControllerTest {
     @MockBean
     private CheckOutVehicleUseCase checkOutUseCase;
 
+    @MockBean
+    private TariffCalculator tariffCalculator;
+
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
     void checkIn_success() throws Exception {
-        Ticket ticket = new Ticket("ABC-123", 1L);
+        ParkingSpot spot = new ParkingSpot(1L, SpotStatus.OCCUPIED);
+        Ticket ticket = new Ticket("ABC-123", spot); 
 
         when(checkInUseCase.execute("ABC-123")).thenReturn(ticket);
 
@@ -58,13 +64,14 @@ class TicketControllerTest {
 
     @Test
     void checkOut_success() throws Exception {
-        Ticket ticket = new Ticket("ABC-123", 1L);
+        ParkingSpot spot = new ParkingSpot(1L, SpotStatus.OCCUPIED);
+        Ticket ticket = new Ticket("ABC-123", spot);
+        
         TariffCalculator calculator = new DefaultTariffCalculator();
         ticket.close(LocalDateTime.now(), calculator);
 
-
         when(checkOutUseCase.execute("ABC-123")).thenReturn(ticket);
-
+        
         CheckOutRequest request = new CheckOutRequest("ABC-123");
 
         mockMvc.perform(post("/tickets/checkout")

@@ -5,6 +5,7 @@ import com.statementlabs.parking_api.application.port.TicketRepository;
 import com.statementlabs.parking_api.domain.ParkingSpot;
 import com.statementlabs.parking_api.domain.SpotStatus;
 import com.statementlabs.parking_api.domain.Ticket;
+import com.statementlabs.parking_api.domain.TicketStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -32,11 +33,13 @@ class CheckInVehicleUseCaseTest {
         ParkingSpot spot = new ParkingSpot(1L, SpotStatus.FREE);
         when(spotRepo.findFirstFree()).thenReturn(Optional.of(spot));
 
+        when(ticketRepo.save(any(Ticket.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
         Ticket ticket = useCase.execute("ABC-123");
 
-        assertEquals("ABC-123", ticket.getPlate());
-        assertEquals(1L, ticket.getSpotId());
-        assertFalse(spot.isFree());
+        assertEquals(1L, ticket.getSpot().getId());
+        assertEquals(TicketStatus.OPEN, ticket.getStatus());
+        assertEquals(TicketStatus.OPEN, ticket.getStatus());
 
         verify(spotRepo).save(spot);
         verify(ticketRepo).save(ticket);

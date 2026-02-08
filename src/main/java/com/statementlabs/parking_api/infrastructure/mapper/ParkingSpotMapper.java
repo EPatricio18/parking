@@ -19,10 +19,11 @@ public class ParkingSpotMapper {
     public ParkingSpotEntity toEntity(ParkingSpot domain) {
         if (domain == null) return null;
 
+        System.out.println("DEBUG: Mapeando Vaga ID: " + domain.getId()); // LOG 1
+        System.out.println("DEBUG: Novo Status: " + domain.getStatus()); // LOG 2
+
         ParkingSpotEntity entity = new ParkingSpotEntity();
-        
         entity.setId(domain.getId());
-        
         entity.setStatus(domain.getStatus().name());
 
         return entity;

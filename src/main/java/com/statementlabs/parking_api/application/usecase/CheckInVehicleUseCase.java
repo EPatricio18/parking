@@ -20,16 +20,17 @@ public class CheckInVehicleUseCase {
         ticketRepository.findOpenByPlate(plate).ifPresent(t -> {
             throw new RuntimeException("Veículo com placa " + plate + " já está no estacionamento!");
         });
-
+    
         ParkingSpot spot = spotRepository
                 .findFirstFree()
                 .orElseThrow(() -> new RuntimeException("Não existem vagas livres disponíveis"));
-
+    
         spot.occupy();
+        
         spotRepository.save(spot);
-
-        Ticket ticket = new Ticket(plate, spot.getId());
-
+    
+        Ticket ticket = new Ticket(plate, spot); 
+    
         return ticketRepository.save(ticket);
     }
 }

@@ -2,7 +2,7 @@ package com.statementlabs.parking_api.domain;
 
 public class ParkingSpot {
 
-    private final long id;
+    private final Long id; 
     private SpotStatus status;
 
     public ParkingSpot(Long id, SpotStatus status) {
@@ -10,12 +10,12 @@ public class ParkingSpot {
         this.status = status;
     }
 
-    public ParkingSpot(int id) {
+    public ParkingSpot(Long id) {
         this.id = id;
         this.status = SpotStatus.FREE;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -29,15 +29,12 @@ public class ParkingSpot {
 
     public void occupy() {
         if (status == SpotStatus.OCCUPIED) {
-            throw new IllegalStateException("Spot already occupied");
+            throw new IllegalStateException("Vaga já ocupada");
         }
         this.status = SpotStatus.OCCUPIED;
     }
 
     public void release() {
-        if (status == SpotStatus.FREE) {
-            throw new IllegalStateException("Spot already free");
-        }
         this.status = SpotStatus.FREE;
     }
 }

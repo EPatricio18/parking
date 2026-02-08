@@ -9,7 +9,7 @@ public class TicketMapper {
         return new TicketDTO(
             ticket.getId(),         
             ticket.getPlate(),
-            ticket.getSpotId(),
+            ticket.getSpot().getId(),
             ticket.getEntryTime(),
             ticket.getExitTime(),
             ticket.getStatus(),

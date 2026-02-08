@@ -5,6 +5,7 @@ import com.statementlabs.parking_api.domain.ParkingSpot;
 import com.statementlabs.parking_api.domain.SpotStatus;
 import com.statementlabs.parking_api.infrastructure.repository.JpaParkingSpotRepository;
 import com.statementlabs.parking_api.infrastructure.mapper.ParkingSpotMapper;
+import com.statementlabs.parking_api.infrastructure.persistence.entity.ParkingSpotEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -35,9 +36,10 @@ public class ParkingSpotRepositoryAdapter implements ParkingSpotRepository {
 
     @Override
     public ParkingSpot save(ParkingSpot spot) {
-        var entity = mapper.toEntity(spot);
-        var savedEntity = jpaRepository.save(entity);
-        return mapper.toDomain(savedEntity);
+
+        jpaRepository.updateStatus(spot.getId(), spot.getStatus().name());
+        
+        return spot;
     }
 
     @Override
