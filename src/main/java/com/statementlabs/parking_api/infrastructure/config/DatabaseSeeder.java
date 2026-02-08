@@ -14,7 +14,7 @@ public class DatabaseSeeder {
     CommandLineRunner initDatabase(ParkingSpotRepository repository) {
         return args -> {
 
-            long count = repository.count();
+            long count = repository.findAll().size();
 
             if (count >= 50) {
                 System.out.println(">>> Vagas já inicializadas.");

@@ -2,49 +2,47 @@ package com.statementlabs.parking_api.presentation.controller;
 
 import com.statementlabs.parking_api.application.usecase.CheckInVehicleUseCase;
 import com.statementlabs.parking_api.application.usecase.CheckOutVehicleUseCase;
-import com.statementlabs.parking_api.presentation.dto.CheckInRequest;
-import com.statementlabs.parking_api.presentation.dto.CheckOutRequest;
-import com.statementlabs.parking_api.presentation.dto.TicketDTO;
+import com.statementlabs.parking_api.application.usecase.GetTicketHistoryUseCase;
+import com.statementlabs.parking_api.domain.Ticket;
+import com.statementlabs.parking_api.domain.TicketStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/tickets")
+@RequestMapping("/api/tickets")
 public class TicketController {
 
     private final CheckInVehicleUseCase checkInUseCase;
     private final CheckOutVehicleUseCase checkOutUseCase;
+    private final GetTicketHistoryUseCase historyUseCase;
 
-    public TicketController(CheckInVehicleUseCase checkInUseCase,
-                            CheckOutVehicleUseCase checkOutUseCase) {
+    public TicketController(CheckInVehicleUseCase checkInUseCase, 
+                            CheckOutVehicleUseCase checkOutUseCase, 
+                            GetTicketHistoryUseCase historyUseCase) {
         this.checkInUseCase = checkInUseCase;
         this.checkOutUseCase = checkOutUseCase;
+        this.historyUseCase = historyUseCase;
     }
 
-    @PostMapping("/checkin")
-    public TicketDTO checkIn(@RequestBody CheckInRequest request) {
-        var ticket = checkInUseCase.execute(request.plate());
-        return new TicketDTO(
-                ticket.getId(),            
-                ticket.getPlate(),
-                ticket.getSpotId(),
-                ticket.getEntryTime(),
-                ticket.getExitTime(),
-                ticket.getStatus(),
-                ticket.getAmount()         
-        );
+    @PostMapping("/check-in/{plate}")
+    public ResponseEntity<Ticket> checkIn(@PathVariable String plate) {
+        return ResponseEntity.ok(checkInUseCase.execute(plate));
     }
 
-    @PostMapping("/checkout")
-    public TicketDTO checkOut(@RequestBody CheckOutRequest request) {
-        var ticket = checkOutUseCase.execute(request.plateOrTicketId());
-        return new TicketDTO(
-                ticket.getId(),
-                ticket.getPlate(),
-                ticket.getSpotId(),
-                ticket.getEntryTime(),
-                ticket.getExitTime(),
-                ticket.getStatus(),
-                ticket.getAmount()
-        );
+    @PostMapping("/check-out/{plate}")
+    public ResponseEntity<Ticket> checkOut(@PathVariable String plate) {
+        return ResponseEntity.ok(checkOutUseCase.execute(plate));
+    }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<Ticket>> getActiveVehicles() {
+        return ResponseEntity.ok(historyUseCase.execute(TicketStatus.OPEN));
+    }
+
+    @GetMapping("/history")
+    public ResponseEntity<List<Ticket>> getFullHistory() {
+        return ResponseEntity.ok(historyUseCase.execute(TicketStatus.CLOSED));
     }
 }

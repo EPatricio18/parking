@@ -9,51 +9,41 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class ParkingSpotRepositoryAdapter implements ParkingSpotRepository {
 
     private final JpaParkingSpotRepository jpaRepository;
+    private final ParkingSpotMapper mapper;
 
-    public ParkingSpotRepositoryAdapter(JpaParkingSpotRepository jpaRepository) {
+    public ParkingSpotRepositoryAdapter(JpaParkingSpotRepository jpaRepository, ParkingSpotMapper mapper) {
         this.jpaRepository = jpaRepository;
+        this.mapper = mapper;
+    }
+
+    @Override
+    public Optional<ParkingSpot> findFirstFree() {
+        return jpaRepository.findFirstByStatus(SpotStatus.FREE)
+                .map(ParkingSpotMapper::toDomain);
+    }
+
+    @Override
+    public Optional<ParkingSpot> findById(Long id) {
+        return jpaRepository.findById(id).map(ParkingSpotMapper::toDomain);
+    }
+
+    @Override
+    public ParkingSpot save(ParkingSpot spot) {
+        var entity = mapper.toEntity(spot);
+        var savedEntity = jpaRepository.save(entity);
+        return mapper.toDomain(savedEntity);
     }
 
     @Override
     public List<ParkingSpot> findAll() {
         return jpaRepository.findAll().stream()
                 .map(ParkingSpotMapper::toDomain)
-                .toList();
-    }
-
-    @Override
-    public List<ParkingSpot> findAvailable() {
-        return jpaRepository.findByStatus(SpotStatus.FREE).stream()
-                .map(ParkingSpotMapper::toDomain)
-                .toList();
-    }
-
-    @Override
-    public void save(ParkingSpot spot) {
-        jpaRepository.save(ParkingSpotMapper.toEntity(spot));
-    }
-
-    @Override
-    public Optional<ParkingSpot> findById(Long id) {
-        return jpaRepository.findById(id)
-                .map(ParkingSpotMapper::toDomain);
-    }
-
-    @Override
-    public Optional<ParkingSpot> findFirstFree() {
-        return jpaRepository.findByStatus(SpotStatus.FREE)
-                            .stream()
-                            .findFirst()
-                            .map(ParkingSpotMapper::toDomain);
-    }
-
-    @Override
-    public long count() {
-        return jpaRepository.count();
+                .collect(Collectors.toList());
     }
 }
