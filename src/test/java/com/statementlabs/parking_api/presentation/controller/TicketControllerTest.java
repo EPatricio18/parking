@@ -5,6 +5,7 @@ import com.statementlabs.parking_api.application.usecase.CheckOutVehicleUseCase;
 import com.statementlabs.parking_api.domain.Ticket;
 import com.statementlabs.parking_api.domain.TicketStatus;
 import com.statementlabs.parking_api.domain.TariffCalculator;
+import com.statementlabs.parking_api.infrastructure.service.DefaultTariffCalculator;
 import com.statementlabs.parking_api.presentation.dto.CheckInRequest;
 import com.statementlabs.parking_api.presentation.dto.CheckOutRequest;
 import com.statementlabs.parking_api.presentation.dto.TicketDTO;
@@ -58,7 +59,7 @@ class TicketControllerTest {
     @Test
     void checkOut_success() throws Exception {
         Ticket ticket = new Ticket("ABC-123", 1L);
-        TariffCalculator calculator = new TariffCalculator();
+        TariffCalculator calculator = new DefaultTariffCalculator();
         ticket.close(LocalDateTime.now(), calculator);
 
 

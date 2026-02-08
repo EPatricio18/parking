@@ -1,5 +1,7 @@
 package com.statementlabs.parking_api.domain;
 
+import com.statementlabs.parking_api.infrastructure.service.DefaultTariffCalculator;
+
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -9,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TariffCalculatorTest {
 
-    private final TariffCalculator calculator = new TariffCalculator();
+    private final TariffCalculator calculator = new DefaultTariffCalculator();
 
     @Test
     void calculate_lessThan6Hours() {
@@ -17,7 +19,8 @@ class TariffCalculatorTest {
         LocalDateTime exit = entry.plusHours(4);
 
         BigDecimal result = calculator.calculate(entry, exit);
-        assertEquals(BigDecimal.valueOf(1200), result);
+        // Em vez de assertEquals(BigDecimal.valueOf(1200), result);
+        assertEquals(0, new BigDecimal("1200.00").compareTo(result));
     }
 
     @Test
@@ -26,7 +29,9 @@ class TariffCalculatorTest {
         LocalDateTime exit = entry.plusHours(8);
 
         BigDecimal result = calculator.calculate(entry, exit);
-        assertEquals(BigDecimal.valueOf(2200), result);
+        //assertEquals(BigDecimal.valueOf(2200), result);
+        assertEquals(0, new BigDecimal("2200.00").compareTo(result));
+
     }
 
     @Test

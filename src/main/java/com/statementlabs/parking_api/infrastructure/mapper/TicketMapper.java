@@ -1,24 +1,26 @@
 package com.statementlabs.parking_api.infrastructure.mapper;
 
-import com.statementlabs.parking_api.domain.TariffCalculator;
 import com.statementlabs.parking_api.domain.Ticket;
+import com.statementlabs.parking_api.domain.TicketStatus;
 import com.statementlabs.parking_api.infrastructure.persistence.entity.TicketEntity;
-
-import java.time.LocalDateTime;
 
 public class TicketMapper {
 
-    public static Ticket toDomain(TicketEntity entity, TariffCalculator calculator) {
+    public static Ticket toDomain(TicketEntity entity) {
         if (entity == null) return null;
 
-        Ticket ticket = new Ticket(entity.getPlate(), entity.getSpotId());
-        ticket.setId(entity.getId());
+        TicketStatus status = entity.getStatus() != null ? 
+                              TicketStatus.valueOf(entity.getStatus()) : null;
 
-        if (entity.getExitTime() != null) {
-            ticket.close(entity.getExitTime(), calculator);
-        }
-
-        return ticket;
+        return new Ticket(
+                entity.getId(),
+                entity.getPlate(),
+                entity.getSpotId(),
+                entity.getEntryTime(),
+                entity.getExitTime(),
+                entity.getAmount(),
+                status
+        );
     }
 
     public static TicketEntity toEntity(Ticket ticket) {
@@ -31,7 +33,10 @@ public class TicketMapper {
         entity.setEntryTime(ticket.getEntryTime());
         entity.setExitTime(ticket.getExitTime());
         entity.setAmount(ticket.getAmount());
-        entity.setStatus(ticket.getStatus().name());
+        
+        if (ticket.getStatus() != null) {
+            entity.setStatus(ticket.getStatus().name());
+        }
 
         return entity;
     }

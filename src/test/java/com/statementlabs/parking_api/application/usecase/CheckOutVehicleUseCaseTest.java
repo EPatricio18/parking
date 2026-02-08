@@ -5,6 +5,7 @@ import com.statementlabs.parking_api.application.port.TicketRepository;
 import com.statementlabs.parking_api.domain.ParkingSpot;
 import com.statementlabs.parking_api.domain.SpotStatus;
 import com.statementlabs.parking_api.domain.TariffCalculator;
+import com.statementlabs.parking_api.infrastructure.service.DefaultTariffCalculator;
 import com.statementlabs.parking_api.domain.Ticket;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +27,7 @@ class CheckOutVehicleUseCaseTest {
     void setup() {
         ticketRepo = mock(TicketRepository.class);
         spotRepo = mock(ParkingSpotRepository.class);
-        calculator = new TariffCalculator();
+        calculator = new DefaultTariffCalculator();
         useCase = new CheckOutVehicleUseCase(ticketRepo, spotRepo, calculator);
     }
 
